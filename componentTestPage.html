@@ -1,0 +1,32 @@
+<html>
+	<head lang="en">
+		<script src="dist/components.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<script type="text/javascript">
+		window.addEventListener('DOMContentLoaded', function() {
+			var container = document.getElementById('components');
+			if (typeof SimpleUI === 'undefined') {
+				var message = "Please ensure that the dist components are generated using iife and that the ModuleName set in rollup.config.js matches the global variable being used in componentTestPage.html";
+				console.warn(message);
+				alert(message);
+
+			}
+			var components = SimpleUI;
+			var compNames = Object.keys(components);
+
+			container.innerHTML = compNames.map(function(name) {
+				return '<div id="' + 'component_' + name + '"></div>';
+			}).join('');
+
+			for (var i = 0, len = compNames.length; i < len; i++) {
+				new SimpleUI[compNames[i]]({
+					target: document.getElementById('component_' + compNames[i])
+				});
+			}
+		});
+	</script>
+	<body>
+		<h1>Component Test Page</h1>
+		<div id="components"></div>
+	</body>
+</html>
